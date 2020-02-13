@@ -4,6 +4,7 @@ require __DIR__.'/vendor/autoload.php';
 
 use App\Sudoku;
 use App\SudokuValidator;
+use App\Exceptions\InputNotValidException;
 
 // Enter your numbers below
 // and run "php index.php" to check your results
@@ -22,6 +23,10 @@ $results = [
     [8, 5, 6, /**/ 3, 1, 9, /**/ 2, 7, 4],
 ];
 
-$sudoku          = new Sudoku($results); 
-$sudokuValidator = new SudokuValidator($sudoku);
-echo $sudokuValidator->validate();
+try {
+    $sudoku          = new Sudoku($results); 
+    $sudokuValidator = new SudokuValidator($sudoku);
+    echo $sudokuValidator->validate();
+} catch(InputNotValidException $e) {
+    echo $e->getMessage() . PHP_EOL;
+}

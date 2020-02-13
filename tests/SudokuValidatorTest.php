@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use App\Exceptions\InputNotValidException;
 use App\Sudoku;
 use App\SudokuValidator;
 use PHPUnit\Framework\TestCase;
@@ -41,6 +42,13 @@ class SudokuValidatorTest extends TestCase
         $this->assertEquals(SudokuValidator::INVALID_MSG . PHP_EOL, $sudokuValidator->validate());
     }
 
+    /** @test */
+    public function it_returns_not_valid_input_error_if_input_structure_or_type_is_incorrect()
+    {   
+        $this->expectException(InputNotValidException::class);
+        new Sudoku('some string'); 
+    }
+
     public function getIncorrectInputs()
     {
         $duplicatedNumber = $this->validInput;
@@ -52,10 +60,14 @@ class SudokuValidatorTest extends TestCase
         $hasNegativeNumber = $this->validInput;
         $hasNegativeNumber[2][4] = -4;
 
+        $hasInvalidValues = $this->validInput;
+        $hasInvalidValues[3][1] = 'some string';
+
         return [
             ['input' => $duplicatedNumber],
             ['input' => $hasZero],
             ['input' => $hasNegativeNumber],
+            ['input' => $hasInvalidValues]
         ];
     }
 }

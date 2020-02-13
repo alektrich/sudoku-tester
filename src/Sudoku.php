@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Exceptions\InputNotValidException;
+
 class Sudoku
 {
     /**
@@ -12,12 +14,12 @@ class Sudoku
     /**
      * @var array
      */
-    protected $columns = [];
+    protected $columns = [[], [], [], [], [], [], [], [], [], []];
 
     /**
      * @var array
      */
-    protected $boxes   = [];
+    protected $boxes   = [[], [], [], [], [], [], [], [], [], []];
 
     public function __construct($rows)
     {
@@ -31,9 +33,8 @@ class Sudoku
      */
     private function prepareData() : void
     {
-        for ($row = 0; $row < 9; $row++) {
-            array_push($this->boxes, []);
-            array_push($this->columns, []);
+        if (!$this->inputTypeValid()) {
+            throw new InputNotValidException();
         }
 
         for ($row = 0; $row < 9; $row++) {
@@ -95,5 +96,24 @@ class Sudoku
     public function getBoxes() : array
     {
         return $this->boxes;
+    }
+
+    /**
+     * Check input type
+     * @return bool
+     */
+    private function inputTypeValid()
+    {
+        if (!is_array($this->rows)) {
+            return false;
+        }
+
+        foreach ($this->rows as $row) {
+            if (!is_array($row)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }

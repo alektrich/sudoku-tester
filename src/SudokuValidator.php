@@ -50,7 +50,11 @@ class SudokuValidator
                 $number     = $input[$row][$column]; 
                 $nextNumber = $input[$row][$column + 1];
 
-                if (!($number && $number < 10) || $number <= 0) {
+                if (
+                    !($number && $number < 10) || 
+                    $number <= 0 ||
+                    !is_integer($number) 
+                ) {
                     return false;
                 }
 
