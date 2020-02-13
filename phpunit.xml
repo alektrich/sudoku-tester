@@ -12,9 +12,4 @@
     <testsuite name="Application Test Suite">
         <directory suffix="Test.php">tests</directory>
     </testsuite>
-    <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./app</directory>
-        </whitelist>
-    </filter>
 </phpunit>

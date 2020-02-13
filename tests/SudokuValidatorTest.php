@@ -49,6 +49,14 @@ class SudokuValidatorTest extends TestCase
         new Sudoku('some string'); 
     }
 
+    /** @test */
+    public function it_returns_not_valid_input_error_if_input_array_is_not_complete()
+    {   
+        $this->expectException(InputNotValidException::class);
+        unset($this->validInput[2]);
+        new Sudoku($this->validInput); 
+    }
+
     public function getIncorrectInputs()
     {
         $duplicatedNumber = $this->validInput;

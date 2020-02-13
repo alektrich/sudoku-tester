@@ -104,12 +104,12 @@ class Sudoku
      */
     private function inputTypeValid()
     {
-        if (!is_array($this->rows)) {
+        if (!is_array($this->rows) || count($this->rows) !== 9) {
             return false;
         }
 
         foreach ($this->rows as $row) {
-            if (!is_array($row)) {
+            if (!is_array($row) || count($row) !== 9) {
                 return false;
             }
         }
